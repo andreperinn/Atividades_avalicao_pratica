@@ -5,6 +5,9 @@ public class BubbleSort {
     private int[] numeros;
 
     public BubbleSort(int[] numeros) {
+        if (numeros == null) {
+            throw new IllegalArgumentException("O vetor não pode ser nulo");
+        }
         this.numeros = numeros;
     }
 
