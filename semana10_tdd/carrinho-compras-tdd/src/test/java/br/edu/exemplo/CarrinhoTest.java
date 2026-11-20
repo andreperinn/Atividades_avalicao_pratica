@@ -29,4 +29,15 @@ class CarrinhoTest {
 
         assertEquals(100.00, carrinho.getTotal(), DELTA);
     }
+
+    // Requisito 3 — Adicionar vários produtos
+    @Test
+    void deveSomarOsPrecosDeVariosProdutos() {
+        Carrinho carrinho = new Carrinho();
+
+        carrinho.adicionarProduto(new Produto("Teclado", 100.00));
+        carrinho.adicionarProduto(new Produto("Mouse", 50.00));
+
+        assertEquals(150.00, carrinho.getTotal(), DELTA);
+    }
 }
