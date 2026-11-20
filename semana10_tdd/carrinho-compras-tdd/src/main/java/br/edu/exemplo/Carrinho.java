@@ -23,11 +23,22 @@ public class Carrinho {
         }
     }
 
-    public double getTotal() {
-        double total = 0;
+    public double getSubtotal() {
+        double subtotal = 0;
         for (Produto produto : produtos) {
-            total += produto.getPreco();
+            subtotal += produto.getPreco();
         }
-        return total;
+        return subtotal;
+    }
+
+    public double getDesconto() {
+        if (getSubtotal() >= 500.00) {
+            return getSubtotal() * 0.10;
+        }
+        return 0;
+    }
+
+    public double getTotal() {
+        return getSubtotal() - getDesconto();
     }
 }
