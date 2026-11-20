@@ -40,4 +40,38 @@ class CarrinhoTest {
 
         assertEquals(150.00, carrinho.getTotal(), DELTA);
     }
+
+    // Requisito 4 — Remover produto
+    @Test
+    void deveRemoverProdutoDoCarrinho() {
+        Carrinho carrinho = new Carrinho();
+        carrinho.adicionarProduto(new Produto("Teclado", 100.00));
+        carrinho.adicionarProduto(new Produto("Mouse", 50.00));
+
+        carrinho.removerProduto("Mouse");
+
+        assertEquals(100.00, carrinho.getTotal(), DELTA);
+    }
+
+    @Test
+    void removerProdutoQueNaoEstaNoCarrinhoNaoDeveAlterarOTotal() {
+        Carrinho carrinho = new Carrinho();
+        carrinho.adicionarProduto(new Produto("Teclado", 100.00));
+
+        carrinho.removerProduto("Monitor");
+
+        assertEquals(100.00, carrinho.getTotal(), DELTA);
+    }
+
+    @Test
+    void deveRemoverApenasUmaUnidadeQuandoHaProdutosRepetidos() {
+        Carrinho carrinho = new Carrinho();
+        carrinho.adicionarProduto(new Produto("Mouse", 50.00));
+        carrinho.adicionarProduto(new Produto("Mouse", 50.00));
+        carrinho.adicionarProduto(new Produto("Teclado", 100.00));
+
+        carrinho.removerProduto("Mouse");
+
+        assertEquals(150.00, carrinho.getTotal(), DELTA);
+    }
 }
