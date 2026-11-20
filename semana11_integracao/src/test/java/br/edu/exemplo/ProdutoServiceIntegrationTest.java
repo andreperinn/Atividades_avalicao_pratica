@@ -44,7 +44,16 @@ class ProdutoServiceIntegrationTest {
   assertEquals(quantidadeAntes, repository.count());
  }
 
+ // CT03 — Atualização (desafio)
  @Test void deveAtualizarPrecoPersistido(){
-  // TODO DESAFIO: cadastrar, atualizar preço e buscar novamente no repositório.
+  Produto mouse = service.cadastrar("Mouse", 80.0);
+  sincronizarComOBanco();
+
+  service.atualizarPreco(mouse.getId(), 95.0);
+  sincronizarComOBanco();
+
+  Produto doBanco = repository.findById(mouse.getId()).orElseThrow();
+  assertEquals("Mouse", doBanco.getNome());
+  assertEquals(95.0, doBanco.getPreco(), 0.001);
  }
 }
