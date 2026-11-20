@@ -5,6 +5,9 @@ import java.util.List;
 
 public class Carrinho {
 
+    private static final double VALOR_MINIMO_PARA_DESCONTO = 500.00;
+    private static final double PERCENTUAL_DE_DESCONTO = 0.10;
+
     private final List<Produto> produtos = new ArrayList<>();
 
     public void adicionarProduto(Produto produto) {
@@ -24,16 +27,15 @@ public class Carrinho {
     }
 
     public double getSubtotal() {
-        double subtotal = 0;
-        for (Produto produto : produtos) {
-            subtotal += produto.getPreco();
-        }
-        return subtotal;
+        return produtos.stream()
+                .mapToDouble(Produto::getPreco)
+                .sum();
     }
 
     public double getDesconto() {
-        if (getSubtotal() >= 500.00) {
-            return getSubtotal() * 0.10;
+        double subtotal = getSubtotal();
+        if (subtotal >= VALOR_MINIMO_PARA_DESCONTO) {
+            return subtotal * PERCENTUAL_DE_DESCONTO;
         }
         return 0;
     }
