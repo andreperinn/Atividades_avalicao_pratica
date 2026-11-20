@@ -3,6 +3,7 @@ package br.edu.exemplo;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Casos de teste adicionais (situações de borda), mantendo intactos
@@ -52,5 +53,10 @@ class BubbleSortCasosAdicionaisTest {
         bubbleSort.ordenar();
 
         assertArrayEquals(new int[]{7}, bubbleSort.getNumeros());
+    }
+
+    @Test
+    void naoDeveAceitarVetorNulo() {
+        assertThrows(IllegalArgumentException.class, () -> new BubbleSort(null));
     }
 }
