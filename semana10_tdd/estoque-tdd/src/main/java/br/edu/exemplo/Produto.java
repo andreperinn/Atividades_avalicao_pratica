@@ -19,6 +19,9 @@ public class Produto {
     }
 
     public void adicionarEstoque(int quantidade) {
+        if (quantidade <= 0) {
+            return;
+        }
         this.quantidade += quantidade;
     }
 
