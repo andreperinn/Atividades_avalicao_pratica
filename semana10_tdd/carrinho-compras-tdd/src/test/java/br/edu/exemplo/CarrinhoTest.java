@@ -3,6 +3,7 @@ package br.edu.exemplo;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /*
  * Testes escritos antes da implementação, um requisito por vez,
@@ -73,5 +74,27 @@ class CarrinhoTest {
         carrinho.removerProduto("Mouse");
 
         assertEquals(150.00, carrinho.getTotal(), DELTA);
+    }
+
+    // Requisito 5 — Produto com preço inválido
+    // Decisão: preço negativo lança IllegalArgumentException e o carrinho não é alterado.
+    @Test
+    void naoDeveAdicionarProdutoComPrecoNegativo() {
+        Carrinho carrinho = new Carrinho();
+        carrinho.adicionarProduto(new Produto("Mouse", 50.00));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> carrinho.adicionarProduto(new Produto("Teclado", -100.00)));
+
+        assertEquals(50.00, carrinho.getTotal(), DELTA);
+    }
+
+    @Test
+    void deveAceitarProdutoComPrecoZero() {
+        Carrinho carrinho = new Carrinho();
+
+        carrinho.adicionarProduto(new Produto("Brinde", 0.00));
+
+        assertEquals(0.00, carrinho.getTotal(), DELTA);
     }
 }
