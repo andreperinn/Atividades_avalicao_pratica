@@ -12,6 +12,9 @@ public class ContaBancaria {
     }
 
     public void depositar(double valor) {
+        if (valor <= 0) {
+            return;
+        }
         saldo += valor;
     }
 
