@@ -12,7 +12,7 @@ Soluções das atividades práticas da Prova 02 da disciplina de **Teste e Quali
 | --- | --- | --- | --- |
 | 10 | Implementar TDD nos quatro projetos disponíveis até a implementação e cobertura total | [`semana10_tdd`](semana10_tdd) | Bubble Sort, Conta Bancária, Estoque e Carrinho de Compras implementados com ciclos RED → GREEN → REFACTOR; 40 testes e **100% de cobertura** (instruções, desvios, linhas e métodos) verificada pelo JaCoCo |
 | 11 | Implementar teste de integração no projeto Spring Boot | [`semana11_integracao`](semana11_integracao) | CT01 a CT05 (service + repository + H2 e HTTP com MockMvc), sem mocks; README com evidências, isolamento e respostas da discussão |
-| 14 | Executar o teste de usuário para o problema proposto (Mercado Livre) | [`semana14_teste_usuario`](semana14_teste_usuario) | Plano do teste, roteiro do avaliador, questionário SUS e planilha de observação com cálculo automático das métricas e dos critérios de sucesso |
+| 14 | Executar o teste de usuário para o problema proposto (Mercado Livre) | [`semana14_teste_usuario`](semana14_teste_usuario) | Plano, roteiro, questionário SUS e planilha de observação; teste executado com uma participante de 60 anos: critérios de carrinho (100%) e tempo (3min54s) atingidos, SUS 92,5 e principal problema na localização dos filtros |
 
 Cada pasta tem o seu próprio `README.md` com os detalhes da atividade.
 
