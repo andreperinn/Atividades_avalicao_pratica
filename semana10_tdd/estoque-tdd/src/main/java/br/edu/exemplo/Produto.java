@@ -19,16 +19,20 @@ public class Produto {
     }
 
     public void adicionarEstoque(int quantidade) {
-        if (quantidade <= 0) {
+        if (!quantidadePositiva(quantidade)) {
             return;
         }
         this.quantidade += quantidade;
     }
 
     public void retirarEstoque(int quantidade) {
-        if (quantidade <= 0 || quantidade > this.quantidade) {
+        if (!quantidadePositiva(quantidade) || quantidade > this.quantidade) {
             return;
         }
         this.quantidade -= quantidade;
+    }
+
+    private boolean quantidadePositiva(int quantidade) {
+        return quantidade > 0;
     }
 }
