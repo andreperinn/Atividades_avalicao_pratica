@@ -1,6 +1,8 @@
 package br.edu.exemplo;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -96,5 +98,32 @@ class CarrinhoTest {
         carrinho.adicionarProduto(new Produto("Brinde", 0.00));
 
         assertEquals(0.00, carrinho.getTotal(), DELTA);
+    }
+
+    // Requisito 6 — Desconto de 10% para compras a partir de R$ 500,00
+    @Test
+    void compraDe600DeveTerDescontoDe10PorCento() {
+        Carrinho carrinho = new Carrinho();
+        carrinho.adicionarProduto(new Produto("Monitor", 400.00));
+        carrinho.adicionarProduto(new Produto("Teclado", 200.00));
+
+        assertEquals(600.00, carrinho.getSubtotal(), DELTA);
+        assertEquals(60.00, carrinho.getDesconto(), DELTA);
+        assertEquals(540.00, carrinho.getTotal(), DELTA);
+    }
+
+    @ParameterizedTest(name = "subtotal {0} -> desconto {1}, total {2}")
+    @CsvSource({
+            "499.99, 0.00, 499.99",
+            "500.00, 50.00, 450.00",
+            "500.01, 50.001, 450.009"
+    })
+    void deveAplicarDescontoSomenteAPartirDe500(double preco, double descontoEsperado, double totalEsperado) {
+        Carrinho carrinho = new Carrinho();
+        carrinho.adicionarProduto(new Produto("Produto", preco));
+
+        assertEquals(preco, carrinho.getSubtotal(), DELTA);
+        assertEquals(descontoEsperado, carrinho.getDesconto(), DELTA);
+        assertEquals(totalEsperado, carrinho.getTotal(), DELTA);
     }
 }
