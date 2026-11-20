@@ -1,6 +1,8 @@
 package br.edu.exemplo;
+import br.edu.exemplo.model.Produto;
 import br.edu.exemplo.repository.ProdutoRepository;
 import br.edu.exemplo.service.ProdutoService;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,14 +12,38 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProdutoServiceIntegrationTest {
  @Autowired ProdutoService service;
  @Autowired ProdutoRepository repository;
+ @Autowired EntityManager entityManager;
+
+ // Grava as alterações pendentes no H2 e limpa o cache do JPA,
+ // para que a próxima consulta faça um SELECT real no banco.
+ private void sincronizarComOBanco(){
+  entityManager.flush();
+  entityManager.clear();
+ }
+
+ // CT01 — Cadastro válido
  @Test void deveCadastrarERecuperarProduto(){
-  // TODO EX1: cadastrar Teclado por 150, confirmar ID e buscar pelo repositório.
-  // Conferir nome e preço do registro recuperado.
+  Produto cadastrado = service.cadastrar("Teclado", 150.0);
+  assertNotNull(cadastrado.getId());
+
+  sincronizarComOBanco();
+
+  Produto doBanco = repository.findById(cadastrado.getId()).orElseThrow();
+  assertEquals("Teclado", doBanco.getNome());
+  assertEquals(150.0, doBanco.getPreco(), 0.001);
  }
+
+ // CT02 — Nome inválido
  @Test void naoDevePersistirProdutoComNomeEmBranco(){
-  // TODO EX1: contar registros, tentar cadastrar nome em branco,
-  // verificar IllegalArgumentException e que a contagem não mudou.
+  long quantidadeAntes = repository.count();
+
+  IllegalArgumentException erro = assertThrows(IllegalArgumentException.class,
+          () -> service.cadastrar("   ", 80.0));
+
+  assertEquals("Nome obrigatório", erro.getMessage());
+  assertEquals(quantidadeAntes, repository.count());
  }
+
  @Test void deveAtualizarPrecoPersistido(){
   // TODO DESAFIO: cadastrar, atualizar preço e buscar novamente no repositório.
  }
