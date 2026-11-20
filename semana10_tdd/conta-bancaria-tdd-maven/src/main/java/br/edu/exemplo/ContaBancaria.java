@@ -19,7 +19,7 @@ public class ContaBancaria {
     }
 
     public void sacar(double valor) {
-        if (valor > saldo) {
+        if (valor <= 0 || valor > saldo) {
             return;
         }
         saldo -= valor;
